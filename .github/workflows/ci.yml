@@ -35,4 +35,4 @@ jobs:
 
       - name: Run pytest unit tests
         run: |
-          pytest -q
+          PYTHONPATH=.; pytest -q
