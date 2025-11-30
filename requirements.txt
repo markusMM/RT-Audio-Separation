@@ -2,6 +2,7 @@ pytest
 pytest-dependency
 numpy
 scipy
+pyo
 statsmodels
 torch
 torchaudio
