@@ -25,7 +25,8 @@ jobs:
           sudo apt-get install -y \
             portaudio19-dev \
             libsndfile1-dev \
-            libportmidi-dev
+            libportmidi-dev \
+            liblo-dev
 
       - name: Install dependencies
         run: |
