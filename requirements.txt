@@ -3,6 +3,5 @@ pytest-dependency
 numpy
 scipy
 statsmodels
---index-url download.pytorch.org
 torch
 torchaudio
