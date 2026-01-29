@@ -1,12 +1,12 @@
+from typing import Any
 import numpy as np
-import torch
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
-from separation.separator import Separator  # Adjust import to your project layout
+from separation.separator import Separator
 
 
 class DummyDemucs:
-    def __init__(self, samplerate=44100):
+    def __init__(self, samplerate: int = 44100) -> None:
         self.samplerate = samplerate
 
     def eval(self):
@@ -15,13 +15,13 @@ class DummyDemucs:
     def to(self, device):
         return self
 
-    def __call__(self, wav):
+    def __call__(self, wav) -> dict[str, Any]:
         # wav shape: (1, C, T)
         return {"vocals": wav}
 
 
 @patch("torch.hub.load")
-def test_separator_respects_block_size(mock_hub_load):
+def test_separator_respects_block_size(mock_hub_load) -> None:
     mock_hub_load.return_value = DummyDemucs()
 
     sep = Separator()  # Uses mocked Demucs now

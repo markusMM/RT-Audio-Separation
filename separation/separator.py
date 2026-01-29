@@ -1,15 +1,21 @@
 from typing import Any
 import torch
 import numpy as np
+from huggingface_hub import hf_hub_download
+
 from separation.common import BLOCK_SEC, DEVICE
 
 # ----------------- separation model wrapper -----------------
 class Separator:
-    def __init__(self, model_name: str = "htdemucs") -> None:
-        self.model = torch.hub.load(
-            "facebookresearch/demucs", model_name
-        ).eval().to(DEVICE)  # type: ignore
-        self.sr = self.model.samplerate
+    def __init__(self, model_name: str = "htdemucs_6s") -> None:
+        model_path = hf_hub_download(
+            repo_id="facebook/demucs", 
+            filename=f"{model_name}.pth",  # or whatever variant
+            local_dir="./models"
+        )
+        self.model, sr = torch.load(model_path)  # load model weights
+        self.model = self.model.eval().to(DEVICE)
+        self.sr = sr
         self.block_size = int(BLOCK_SEC * self.sr)
 
     def separate_block(self, block_np: np.ndarray, stem: str = "vocals") -> Any:
